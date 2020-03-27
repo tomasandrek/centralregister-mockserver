@@ -268,7 +268,7 @@ paths:
       operationId: mockedData.search_addresses__get
       security:
         - oauth:
-            - 'search:addresses'
+            - 'address:search'
       parameters:
         - in: query
           name: postcode

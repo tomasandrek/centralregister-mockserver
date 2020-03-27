@@ -127,8 +127,98 @@ def search_assessors__get() -> str:
     return 'search_assessors__get'
 
 
-def search_addresses__get() -> str:
-    return 'search_addresses__get'
+def search_addresses__get(**query):
+    if 'postcode' not in query and 'street' not in query and 'addressId' not in query:
+        return [], 500
+
+    if 'street' in query:
+        street = query['street']
+
+    if 'postcode' in query:
+
+        postcode = query['postcode']
+
+        if postcode == 'SW1P 4JX':
+            return [], 403
+
+        if postcode != 'SW1P 4JA':
+            return [], 200
+
+        if 'street' in query and street == '2 Marsham Street':
+            response = [{
+                'source': 'GAZETTEER',
+                'line1': '2 Marsham Street',
+                'line2': 'Line 2',
+                'line3': 'Line 3',
+                'line4': '',
+                'town': 'London',
+                'postcode': 'SW1P 4JA',
+                'addressId': 'UPRN-7163757',
+                'existingAssessments': []
+            }]
+            return response, 200
+
+        if 'street' in query and street != '2 Marsham Street':
+            response = []
+            return response, 200
+
+        response = [{
+            'source': 'GAZETTEER',
+            'line1': '2 Marsham Street',
+            'line2': 'Line 2',
+            'line3': 'Line 3',
+            'line4': '',
+            'town': 'London',
+            'postcode': 'SW1P 4JA',
+            'addressId': 'UPRN-7163757',
+            'existingAssessments': []
+        }, {
+            'source': 'PREVIOUS_CERTIFICATE',
+            'line1': '10 Marsham Street',
+            'line2': '',
+            'line3': '',
+            'line4': '',
+            'town': 'London',
+            'postcode': 'SW1P 4JA',
+            'addressId': 'RRN-8290-6027-4450-1230-5296',
+            'existingAssessments': []
+        }]
+
+        return response, 200
+
+    if 'addressId' in query:
+
+        addressId = query['addressId']
+
+        if addressId == 'UPRN-7163757':
+            response = [{
+                'source': 'GAZETTEER',
+                'line1': '2 Marsham Street',
+                'line2': 'Line 2',
+                'line3': 'Line 3',
+                'line4': '',
+                'town': 'London',
+                'postcode': 'SW1P 4JA',
+                'addressId': 'UPRN-7163757',
+                'existingAssessments': []
+            }]
+            return response, 200
+
+        if addressId == 'RRN-8290-6027-4450-1230-5296':
+            response = [{
+                'source': 'PREVIOUS_CERTIFICATE',
+                'line1': '10 Marsham Street',
+                'line2': '',
+                'line3': '',
+                'line4': '',
+                'town': 'London',
+                'postcode': 'SW1P 4JA',
+                'addressId': 'RRN-8290-6027-4450-1230-5296',
+                'existingAssessments': []
+            }]
+            return response, 200
+
+        return [], 403
 
 
 def assessments_x__get() -> str:
