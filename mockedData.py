@@ -1,8 +1,16 @@
 import connexion
 
 
-def schemes__get() -> str:
-    return 'schemes__get'
+def schemes__get():
+    response = [{
+        "schemeId": 60,
+        "name": "Test Schema 01"
+    }, {
+        "schemeId": 60,
+        "name": "Test Schema 02"
+    }]
+
+    return response, 200
 
 
 def schemes__post() -> str:
