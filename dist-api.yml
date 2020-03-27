@@ -192,6 +192,7 @@ paths:
           description: Assessor ID assigned by the registering scheme
           schema:
             type: string
+            format: path
       requestBody:
         content:
           application/json:
