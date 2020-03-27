@@ -17,12 +17,100 @@ def schemes__post() -> str:
     return 'schemes__post'
 
 
-def schemes_x_assessors__get(schemeId) -> str:
-    return 'schemes_x_assessors__get schemeId={schemeId}'.format(schemeId=schemeId)
+def schemes_x_assessors__get(schemeId):
+    response = [{
+        'firstName': 'Jo',
+        'lastName': 'Blogs',
+        'middleNames': 'T',
+        'contactDetails': {
+            'telephoneNumber': '123456',
+            'email': 'j.t.bloggs@example.com'
+        },
+        'qualifications': {
+            'domesticRdSap': 'ACTIVE',
+            'domesticSap': 'ACTIVE',
+            'nonDomesticDec': 'ACTIVE',
+            'nonDomesticNos3': 'ACTIVE',
+            'nonDomesticNos4': 'ACTIVE',
+            'nonDomesticNos5': 'ACTIVE',
+            'nonDomesticSp3': 'ACTIVE',
+            'nonDomesticCc4': 'ACTIVE'
+        },
+        'dateOfBirth': '1990-01-10',
+        'registeredBy': {
+            'schemeId': 60,
+            'name': 'Test Schema 01'
+        },
+        'schemeAssessorId': 'X999-0001',
+        'searchResultsComparisonPostcode': 'SW1P 4JA'
+    }, {
+        'firstName': 'Vlado',
+        'lastName': 'Polacok',
+        'middleNames': 'J',
+        'contactDetails': {
+            'telephoneNumber': '123456',
+            'email': 'v.j.polacok@example.com'
+        },
+        'qualifications': {
+            'domesticRdSap': 'ACTIVE',
+            'domesticSap': 'ACTIVE',
+            'nonDomesticDec': 'ACTIVE',
+            'nonDomesticNos3': 'ACTIVE',
+            'nonDomesticNos4': 'ACTIVE',
+            'nonDomesticNos5': 'ACTIVE',
+            'nonDomesticSp3': 'ACTIVE',
+            'nonDomesticCc4': 'ACTIVE'
+        },
+        'dateOfBirth': '1972-01-10',
+        'registeredBy': {
+            'schemeId': 60,
+            'name': 'Test Schema 01'
+        },
+        'schemeAssessorId': 'X999-0002',
+        'searchResultsComparisonPostcode': 'SW1P 4JA'
+    }]
+
+    if schemeId == 60:
+        return response, 200
+    else:
+        return 'Scheme not found', 404
 
 
-def schemes_x_assessors_x__get(schemeId, schemeAssessorId) -> str:
-    return 'schemes_x_assessors_x__get schemeId={schemeId} schemeAssessorId={schemeAssessorId}'.format(schemeId=schemeId, schemeAssessorId=schemeAssessorId)
+def schemes_x_assessors_x__get(schemeId, schemeAssessorId):
+    response = {
+        'firstName': 'Jo',
+        'lastName': 'Blogs',
+        'middleNames': 'T',
+        'contactDetails': {
+            'telephoneNumber': '123456',
+            'email': 'j.t.bloggs@example.com'
+        },
+        'qualifications': {
+            'domesticRdSap': 'ACTIVE',
+            'domesticSap': 'ACTIVE',
+            'nonDomesticDec': 'ACTIVE',
+            'nonDomesticNos3': 'ACTIVE',
+            'nonDomesticNos4': 'ACTIVE',
+            'nonDomesticNos5': 'ACTIVE',
+            'nonDomesticSp3': 'ACTIVE',
+            'nonDomesticCc4': 'ACTIVE'
+        },
+        'dateOfBirth': '1990-01-10',
+        'registeredBy': {
+            'schemeId': 60,
+            'name': 'Test Schema 01'
+        },
+        'schemeAssessorId': 'X999-0001',
+        'searchResultsComparisonPostcode': 'SW1P 4JA'
+    }
+
+    if schemeId != 60:
+        return 'Scheme not found', 404
+
+    if schemeAssessorId == 'X999-0001':
+        return response, 200
+    else:
+        return 'Assessor not found', 404
 
 
 def schemes_x_assessors_x__put(schemeId, schemeAssessorId):
