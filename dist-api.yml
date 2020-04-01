@@ -271,6 +271,11 @@ paths:
             - 'address:search'
       parameters:
         - in: query
+          name: addressId
+          description: The addressId of the address being searched for
+          schema:
+            type: string
+        - in: query
           name: postcode
           description: The postcode of the address being searched for
           schema:
