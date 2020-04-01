@@ -174,6 +174,16 @@ def search_addresses__get(**query):
             'existingAssessments': []
         }, {
             'source': 'PREVIOUS_CERTIFICATE',
+            'line1': '2 Marsham Street',
+            'line2': 'Line2',
+            'line3': 'Line3',
+            'line4': '',
+            'town': 'London',
+            'postcode': 'SW1P 4JA',
+            'addressId': 'RRN-8290-6027-4450-1230-9999',
+            'existingAssessments': []
+        }, {
+            'source': 'PREVIOUS_CERTIFICATE',
             'line1': '10 Marsham Street',
             'line2': '',
             'line3': '',
@@ -218,6 +228,20 @@ def search_addresses__get(**query):
             }]
             return response, 200
 
+        if addressId == 'RRN-8290-6027-4450-1230-9999':
+            response = [{
+                'source': 'PREVIOUS_CERTIFICATE',
+                'line1': '2 Marsham Street',
+                'line2': 'Line2',
+                'line3': 'Line3',
+                'line4': '',
+                'town': 'London',
+                'postcode': 'SW1P 4JA',
+                'addressId': 'RRN-8290-6027-4450-1230-9999',
+                'existingAssessments': []
+            }]
+            return response, 200
+
         return [], 403
 
 
@@ -241,5 +265,5 @@ def migrations_assessments_x__put(assessmentId) -> str:
     return 'migrations_assessments_x__put  assessmentId={assessmentId}'.format(assessmentId=assessmentId)
 
 
-def migrations_addresses_x__put(addressId) -> str:
-    return 'migrations_addresses_x__put  addressId={addressId}'.format(addressId=addressId)
+def migrations_addresses_x__put(addressId):
+    return connexion.request.json, 201
