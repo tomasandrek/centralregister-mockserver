@@ -1,4 +1,67 @@
 import connexion
+import json
+from flask import Response
+
+
+class address:
+    def __init__(self, p_source, p_line1, p_line2, p_line3, p_line4, p_town, p_postcode, p_addressId, p_existingAssessments):
+        self.source = p_source
+        self.line1 = p_line1
+        self.line2 = p_line2
+        self.line3 = p_line3
+        self.line4 = p_line4
+        self.town = p_town
+        self.postcode = p_postcode
+        self.addressId = p_addressId
+        self.existingAssessments = p_existingAssessments
+
+
+addresses = []
+addresses.append(address("GAZETTEER", "2 Marsham Street", "Line 2",
+                         "Line 3", "", "London", "SW1P 4JA", "UPRN-7163757", []))
+addresses.append(address("PREVIOUS_CERTIFICATE", "2 Marsham Street", "Line2",
+                         "Line3", "", "London", "SW1P 4JA", "RRN-8290-6027-4450-1230-9999", []))
+addresses.append(address("PREVIOUS_CERTIFICATE", "10 Marsham Street",
+                         "", "", "", "London", "SW1P 4JA", "RRN-8290-6027-4450-1230-5296", []))
+
+addresses.append(address("GAZETTEER", "16 St. Johns Business Park", "",
+                         "Leicetershure", "", "LUTTERWORTH", "LE17 4HB", "UPRN-5498652", []))
+addresses.append(address("GAZETTEER", "The Cottage, Church Lane", "Comberton",
+                         "", "", "CAMBRIDGE", "CB23 7ED", "UPRN-54112352", []))
+addresses.append(address("GAZETTEER", "Ladywood Works, Leicester Road", "",
+                         "Leicestershire", "", "LUTTERWORTH", "LE17 4HD", "UPRN-12312352", []))
+addresses.append(address("GAZETTEER", "Flat 5 Laughton Court, Stoughton Road", "",
+                         "", "", "LEICESTER", "LE2 2ED", "UPRN-9872352", []))
+addresses.append(address("GAZETTEER", "56 Wendover Heights, Old Tring Road", "Wendover",
+                         "Buckinghamshire", "", "AYLESBURY", "HP22 6PH", "UPRN-88009872352", []))
+addresses.append(address("GAZETTEER", "Flat 2, 1, Upper Cape", "",
+                         "", "", "WARWICK", "CV34 5DS", "UPRN-14009872352", []))
+
+addresses.append(address("GAZETTEER", "The Vestry", "Llanddewi Velfrey",
+                         "Dyfed", "", "NARBERTH", "SA67 7EG", "UPRN-14009871232", []))
+addresses.append(address("GAZETTEER", "Bryn Mor", "Rhosgadfan",
+                         "Gwynedd", "", "CAERNARFON", "LL54 7HR", "UPRN-98709871232", []))
+addresses.append(address("GAZETTEER", "10, Lon Ty'n-y-Cae", "",
+                         "", "", "CARDIFF", "CF14 6DD", "UPRN-98882871232", []))
+addresses.append(address("GAZETTEER", "59, Hanbury Road", "Pontnewynydd",
+                         "Gwent", "", "PONTYPOOL", "NP4 6PF", "UPRN-11882871232", []))
+addresses.append(address("GAZETTEER", "Cae'r Odyn", "Rhiw",
+                         "Gwynedd", "", "PWLLHELI", "LL53 8AS", "UPRN-11882221232", []))
+addresses.append(address("GAZETTEER", "28, Penrho Estate", "Mostyn",
+                         "Clwyd", "", "HOLYWELL", "CH8 9QS", "UPRN-18882221232", []))
+
+addresses.append(address("GAZETTEER", "Metropolitan Building 29-31, Alfred Street", "",
+                         "", "", "BELFAST", "BT2 8ED", "UPRN-17742221232", []))
+addresses.append(address("GAZETTEER", "Gordon House, 22-24, Lombard Street", "",
+                         "", "", "BELFAST", "BT1 1RD", "UPRN-47742221232", []))
+addresses.append(address("PREVIOUS_CERTIFICATE", "Gordon House, 22-24, Lombard Street", "",
+                         "", "", "BELFAST", "BT1 1RD", "RRN-1110-6027-4450-1230-5296", []))
+addresses.append(address("GAZETTEER", "78, St. James's Road", "",
+                         "", "", "BELFAST", "BT12 6ED", "UPRN-88742110232", []))
+addresses.append(address("GAZETTEER", "39, Lord Warden's Glade", "",
+                         "County Down", "", "BANGOR", "BT19 1GW", "UPRN-98742110232", []))
+addresses.append(address("GAZETTEER", "Apartment 219 St. Anne's Square, 10, Edward Street", "",
+                         "", "", "BELFAST", "BT1 2LP", "UPRN-14742110232", []))
 
 
 def schemes__get():
@@ -131,118 +194,27 @@ def search_addresses__get(**query):
     if 'postcode' not in query and 'street' not in query and 'addressId' not in query:
         return [], 500
 
-    if 'street' in query:
-        street = query['street']
+    items = [x for x in addresses]
 
     if 'postcode' in query:
-
         postcode = query['postcode']
+        if (postcode != ''):
+            items = [x for x in items if x.postcode == postcode]
 
-        if postcode == 'SW1P 4JX':
-            return [], 403
+    if 'street' in query:
+        street = query['street']
+        items = [x for x in items if x.line1 == street]
 
-        if postcode != 'SW1P 4JA':
-            return [], 200
-
-        if 'street' in query and street == '2 Marsham Street':
-            response = [{
-                'source': 'GAZETTEER',
-                'line1': '2 Marsham Street',
-                'line2': 'Line 2',
-                'line3': 'Line 3',
-                'line4': '',
-                'town': 'London',
-                'postcode': 'SW1P 4JA',
-                'addressId': 'UPRN-7163757',
-                'existingAssessments': []
-            }]
-            return response, 200
-
-        if 'street' in query and street != '2 Marsham Street':
-            response = []
-            return response, 200
-
-        response = [{
-            'source': 'GAZETTEER',
-            'line1': '2 Marsham Street',
-            'line2': 'Line 2',
-            'line3': 'Line 3',
-            'line4': '',
-            'town': 'London',
-            'postcode': 'SW1P 4JA',
-            'addressId': 'UPRN-7163757',
-            'existingAssessments': []
-        }, {
-            'source': 'PREVIOUS_CERTIFICATE',
-            'line1': '2 Marsham Street',
-            'line2': 'Line2',
-            'line3': 'Line3',
-            'line4': '',
-            'town': 'London',
-            'postcode': 'SW1P 4JA',
-            'addressId': 'RRN-8290-6027-4450-1230-9999',
-            'existingAssessments': []
-        }, {
-            'source': 'PREVIOUS_CERTIFICATE',
-            'line1': '10 Marsham Street',
-            'line2': '',
-            'line3': '',
-            'line4': '',
-            'town': 'London',
-            'postcode': 'SW1P 4JA',
-            'addressId': 'RRN-8290-6027-4450-1230-5296',
-            'existingAssessments': []
-        }]
-
-        return response, 200
+    if 'town' in query:
+        town = query['town']
+        items = [x for x in items if x.town == town]
 
     if 'addressId' in query:
-
         addressId = query['addressId']
+        items = [x for x in addresses if x.addressId == addressId]
 
-        if addressId == 'UPRN-7163757':
-            response = [{
-                'source': 'GAZETTEER',
-                'line1': '2 Marsham Street',
-                'line2': 'Line 2',
-                'line3': 'Line 3',
-                'line4': '',
-                'town': 'London',
-                'postcode': 'SW1P 4JA',
-                'addressId': 'UPRN-7163757',
-                'existingAssessments': []
-            }]
-            return response, 200
-
-        if addressId == 'RRN-8290-6027-4450-1230-5296':
-            response = [{
-                'source': 'PREVIOUS_CERTIFICATE',
-                'line1': '10 Marsham Street',
-                'line2': '',
-                'line3': '',
-                'line4': '',
-                'town': 'London',
-                'postcode': 'SW1P 4JA',
-                'addressId': 'RRN-8290-6027-4450-1230-5296',
-                'existingAssessments': []
-            }]
-            return response, 200
-
-        if addressId == 'RRN-8290-6027-4450-1230-9999':
-            response = [{
-                'source': 'PREVIOUS_CERTIFICATE',
-                'line1': '2 Marsham Street',
-                'line2': 'Line2',
-                'line3': 'Line3',
-                'line4': '',
-                'town': 'London',
-                'postcode': 'SW1P 4JA',
-                'addressId': 'RRN-8290-6027-4450-1230-9999',
-                'existingAssessments': []
-            }]
-            return response, 200
-
-        return [], 403
+    json_dump = json.dumps([ob.__dict__ for ob in items])
+    return Response(json_dump, status=200, mimetype='application/json')
 
 
 def assessments_x__get() -> str:
