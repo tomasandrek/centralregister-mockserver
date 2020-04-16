@@ -66,7 +66,7 @@ addresses.append(address("GAZETTEER", "Apartment 219", "10, Edward Street",
 
 def schemes__get():
     response = [{
-        "schemeId": 60,
+        "schemeId": 3,
         "name": "Test Schema 01"
     }, {
         "schemeId": 60,
@@ -101,7 +101,7 @@ def schemes_x_assessors__get(schemeId):
         },
         'dateOfBirth': '1990-01-10',
         'registeredBy': {
-            'schemeId': 60,
+            'schemeId': 3,
             'name': 'Test Schema 01'
         },
         'schemeAssessorId': 'X999-0001',
@@ -126,14 +126,14 @@ def schemes_x_assessors__get(schemeId):
         },
         'dateOfBirth': '1972-01-10',
         'registeredBy': {
-            'schemeId': 60,
+            'schemeId': 3,
             'name': 'Test Schema 01'
         },
         'schemeAssessorId': 'X999-0002',
         'searchResultsComparisonPostcode': 'SW1P 4JA'
     }]
 
-    if schemeId == 60:
+    if schemeId == 3:
         return response, 200
     else:
         return 'Scheme not found', 404
@@ -160,14 +160,14 @@ def schemes_x_assessors_x__get(schemeId, schemeAssessorId):
         },
         'dateOfBirth': '1990-01-10',
         'registeredBy': {
-            'schemeId': 60,
+            'schemeId': 3,
             'name': 'Test Schema 01'
         },
         'schemeAssessorId': 'X999-0001',
         'searchResultsComparisonPostcode': 'SW1P 4JA'
     }
 
-    if schemeId != 60:
+    if schemeId != 3:
         return 'Scheme not found', 404
 
     if schemeAssessorId == 'X999-0001':
@@ -177,7 +177,7 @@ def schemes_x_assessors_x__get(schemeId, schemeAssessorId):
 
 
 def schemes_x_assessors_x__put(schemeId, schemeAssessorId):
-    if schemeId != 60:
+    if schemeId != 3:
         return 'Scheme not found', 404
 
     if schemeAssessorId == 'EES/090001':
