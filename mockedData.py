@@ -186,8 +186,8 @@ def schemes_x_assessors_x__put(schemeId, schemeAssessorId):
         return connexion.request.json, 201
 
 
-def search_assessors__get() -> str:
-    return 'search_assessors__get'
+def assessors__get() -> str:
+    return 'assessors__get'
 
 
 def search_addresses__get(**query):
@@ -239,3 +239,23 @@ def migrations_assessments_x__put(assessmentId) -> str:
 
 def migrations_addresses_x__put(addressId):
     return connexion.request.json, 201
+
+
+def greendeal_assessments_x__get() -> str:
+    return 'greendeal_assessments_x__get'
+
+
+def greendeal_rhi_assessments_x_latest__get() -> str:
+    return 'greendeal_rhi_assessments_x_latest__get'
+
+
+def greendeal_disclosure_assessments_x_plans__put(assessmentId) -> str:
+    return 'greendeal_disclosure_assessments_x_plans__put  assessmentId={assessmentId}'.format(assessmentId=assessmentId)
+
+
+def greendeal_disclosure_plans_x__put(planId) -> str:
+    return 'greendeal_disclosure_plans_x__put  planId={planId}'.format(planId=planId)
+
+
+def greendeal_disclosure_plans_x__delete(planId) -> str:
+    return 'greendeal_disclosure_plans_x__delete  planId={planId}'.format(planId=planId)
