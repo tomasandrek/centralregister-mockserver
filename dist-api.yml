@@ -6,11 +6,11 @@ info:
   version: 1.0.0-rc4
 
 servers:
-  - url: "https://api.epb-integration.digital.communities.gov.uk/"
+  - url: 'https://api.epb-integration.digital.communities.gov.uk/'
     description: Integration Service
-  - url: "https://api.epb-staging.digital.communities.gov.uk/"
+  - url: 'https://api.epb-staging.digital.communities.gov.uk/'
     description: Staging Service
-  - url: "https://api.epb.digital.communities.gov.uk/"
+  - url: 'https://api.epb.digital.communities.gov.uk/'
     description: Production Service
 
 tags:
@@ -19,7 +19,7 @@ tags:
   - name: Manage Assessors
     description: Manage assessors for a given Scheme
   - name: Manage Assessments
-    description: "Manage EPCs, DECs, RRs and ACIRs"
+    description: 'Manage EPCs, DECs, RRs and ACIRs'
   - name: Manage Addresses
     description: Manage addresses in the register
   - name: Manage Schemes
@@ -38,11 +38,11 @@ paths:
       operationId: mockedData.schemes__get
       security:
         - oauth:
-            - "scheme:list"
+            - 'scheme:list'
       responses:
-        "403":
+        '403':
           description: Forbidden
-        "200":
+        '200':
           description: List of all schemes
           content:
             application/json:
@@ -55,7 +55,7 @@ paths:
                       schemes:
                         type: array
                         items:
-                          $ref: "#/components/schemas/Scheme"
+                          $ref: '#/components/schemas/Scheme'
       parameters: []
     post:
       tags:
@@ -64,16 +64,16 @@ paths:
       operationId: mockedData.schemes__post
       security:
         - oauth:
-            - "scheme:create"
+            - 'scheme:create'
       requestBody:
         description: The scheme to be added
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SchemeBody"
+              $ref: '#/components/schemas/SchemeBody'
       responses:
-        "201":
+        '201':
           description: Scheme succesfully created
           content:
             application/json:
@@ -81,10 +81,10 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: "#/components/schemas/Scheme"
-        "403":
+                    $ref: '#/components/schemas/Scheme'
+        '403':
           description: Forbidden
-        "409":
+        '409':
           description: Scheme already exists
           content:
             application/json:
@@ -105,7 +105,7 @@ paths:
                             A scheme with this name already exists in the
                             register
 
-  "/schemes/{schemeId}/assessors":
+  '/schemes/{schemeId}/assessors':
     get:
       tags:
         - Manage Assessors
@@ -113,7 +113,7 @@ paths:
       operationId: mockedData.schemes_x_assessors__get
       security:
         - oauth:
-            - "scheme:assessor:list"
+            - 'scheme:assessor:list'
       parameters:
         - in: path
           required: true
@@ -122,7 +122,7 @@ paths:
           schema:
             type: integer
       responses:
-        "200":
+        '200':
           description: List of assessors for a scheme
           content:
             application/json:
@@ -135,13 +135,13 @@ paths:
                       assessors:
                         type: array
                         items:
-                          $ref: "#/components/schemas/AssessorBody"
-        "404":
+                          $ref: '#/components/schemas/AssessorBody'
+        '404':
           description: Scheme not found
-        "403":
+        '403':
           description: Forbidden
 
-  "/schemes/{schemeId}/assessors/{schemeAssessorId}":
+  '/schemes/{schemeId}/assessors/{schemeAssessorId}':
     get:
       tags:
         - Manage Assessors
@@ -149,7 +149,7 @@ paths:
       operationId: mockedData.schemes_x_assessors_x__get
       security:
         - oauth:
-            - "scheme:assessor:fetch"
+            - 'scheme:assessor:fetch'
       parameters:
         - in: path
           required: true
@@ -162,9 +162,9 @@ paths:
           name: schemeAssessorId
           description: The Assessor ID assigned by the scheme
           schema:
-            $ref: "#/components/schemas/AssessorSchemeId"
+            $ref: '#/components/schemas/AssessorSchemeId'
       responses:
-        "200":
+        '200':
           description: Assessor found
           content:
             application/json:
@@ -172,10 +172,10 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: "#/components/schemas/AssessorBody"
-        "404":
+                    $ref: '#/components/schemas/AssessorBody'
+        '404':
           description: Assessor not found
-        "403":
+        '403':
           description: Forbidden
     put:
       tags:
@@ -186,7 +186,7 @@ paths:
       operationId: mockedData.schemes_x_assessors_x__put
       security:
         - oauth:
-            - "scheme:assessor:update"
+            - 'scheme:assessor:update'
       parameters:
         - in: path
           name: schemeId
@@ -205,9 +205,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AssessorBody"
+              $ref: '#/components/schemas/AssessorBody'
       responses:
-        "200":
+        '200':
           description: Existing assessor updated
           content:
             application/json:
@@ -215,8 +215,8 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: "#/components/schemas/AssessorBody"
-        "201":
+                    $ref: '#/components/schemas/AssessorBody'
+        '201':
           description: New assessor succesfully registered
           content:
             application/json:
@@ -224,12 +224,12 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: "#/components/schemas/AssessorBody"
-        "400":
+                    $ref: '#/components/schemas/AssessorBody'
+        '400':
           description: Problem with assessor registration record
-        "403":
+        '403':
           description: Forbidden
-        "409":
+        '409':
           description: Assessor already exists on a different scheme
 
   /assessors:
@@ -241,35 +241,35 @@ paths:
       operationId: mockedData.assessors__get
       security:
         - oauth:
-            - "assessor:search"
+            - 'assessor:search'
       parameters:
         - in: query
           name: postcode
           description: A postcode to search from for an assessor
           schema:
-            $ref: "#/components/schemas/AddressPostcode"
+            $ref: '#/components/schemas/AddressPostcode'
         - in: query
           name: name
           description: The name of the assessor
           schema:
-            $ref: "#/components/schemas/AssessorFullName"
+            $ref: '#/components/schemas/AssessorFullName'
         - in: query
           name: qualification
           description: Only show assessors who have this qualification
           schema:
-            $ref: "#/components/schemas/AssessorQualificationSearchOptions"
+            $ref: '#/components/schemas/AssessorQualificationSearchOptions'
       responses:
-        "200":
+        '200':
           description: List of assessors matching the search criteria
           content:
             application/json:
               schema:
                 oneOf:
-                  - $ref: "#/components/schemas/AssessorSearchResults"
-                  - $ref: "#/components/schemas/AssessorSearchByPostcodeResults"
-        "400":
+                  - $ref: '#/components/schemas/AssessorSearchResults'
+                  - $ref: '#/components/schemas/AssessorSearchByPostcodeResults'
+        '400':
           description: Invalid query
-        "403":
+        '403':
           description: Forbidden
 
   /search/addresses:
@@ -277,41 +277,47 @@ paths:
       tags:
         - Search
         - Manage Addresses
-      summary: "Search for an address by (optional) type and
+      summary: 'Search for an address by (optional) type and
         EITHER:
         - a postcode (with optional building name or number)
         OR
-        - a street AND town"
+        - a street AND town
+        OR
+        - a building reference number (UPRN or RRN)'
       operationId: mockedData.search_addresses__get
       security:
         - oauth:
-            - "address:search"
+            - 'address:search'
       parameters:
-        - in: query
-          name: addressId
-          description: The addressId of the address being searched for
-          schema:
-            type: string
         - in: query
           name: postcode
           description: The postcode of the address being searched for
           schema:
-            $ref: "#/components/schemas/AddressPostcode"
+            $ref: '#/components/schemas/AddressPostcode'
         - in: query
           name: buildingNameNumber
           description: The building name or number being searched for
+          example: '47'
           schema:
             type: string
         - in: query
           name: street
           description: The street of the address being searched for
+          example: 'High Road'
           schema:
             type: string
         - in: query
           name: town
           description: The city or town of the address being searched for
+          example: 'Woking'
           schema:
-            $ref: "#/components/schemas/AddressTown"
+            $ref: '#/components/schemas/AddressTown'
+        - in: query
+          name: buildingReferenceNumber
+          description: A known UPRN or RRN to fetch a single address
+          example: 'UPRN-716375734512'
+          schema:
+            type: string
         - in: query
           name: addressType
           description: Domestic or commercial address
@@ -321,16 +327,16 @@ paths:
               - DOMESTIC
               - COMMERCIAL
       responses:
-        "403":
+        '403':
           description: Forbidden
-        "200":
+        '200':
           description: Address search results
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AddressSearchResults"
+                $ref: '#/components/schemas/AddressSearchResults'
 
-  "/assessments/{assessmentId}":
+  '/assessments/{assessmentId}':
     get:
       tags:
         - Manage Assessments
@@ -338,16 +344,16 @@ paths:
       operationId: mockedData.assessments_x__get
       security:
         - oauth:
-            - "assessment:fetch"
+            - 'assessment:fetch'
       parameters:
         - in: path
           name: assessmentId
           required: true
-          description: "The ID of the assessment being requested, usually RRN"
+          description: 'The ID of the assessment being requested, usually RRN'
           schema:
-            $ref: "#/components/schemas/AssessmentId"
+            $ref: '#/components/schemas/AssessmentId'
       responses:
-        "200":
+        '200':
           description: Energy Performance Assessment
           content:
             application/json:
@@ -355,21 +361,21 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: "#/components/schemas/Empty"
+                    $ref: '#/components/schemas/Empty'
             application/xml:
               schema:
                 type: object
                 properties:
                   data:
-                    $ref: "#/components/schemas/Empty"
-        "403":
+                    $ref: '#/components/schemas/Empty'
+        '403':
           description: Forbidden
-        "404":
+        '404':
           description: Assessment not found
-        "500":
+        '500':
           description: Server error
 
-  "/assessments/{assessmentType}/{assessmentId}":
+  '/assessments/{assessmentType}/{assessmentId}':
     post:
       tags:
         - Manage Assessments
@@ -377,27 +383,27 @@ paths:
       operationId: mockedData.assessments_x_x__post
       security:
         - oauth:
-            - "assessment:lodge"
+            - 'assessment:lodge'
       parameters:
         - in: path
           name: assessmentId
           required: true
-          description: "The ID of the assessment being added, usually RRN"
+          description: 'The ID of the assessment being added, usually RRN'
           schema:
-            $ref: "#/components/schemas/AssessmentId"
+            $ref: '#/components/schemas/AssessmentId'
         - in: path
           name: assessmentType
           required: true
-          description: "The type of the assessment being added"
+          description: 'The type of the assessment being added'
           schema:
-            $ref: "#/components/schemas/AssessmentType"
+            $ref: '#/components/schemas/AssessmentType'
       requestBody:
         content:
           application/xml+RdSAP-Schema-19.0:
             schema:
-              $ref: "#/components/schemas/Empty"
+              $ref: '#/components/schemas/Empty'
       responses:
-        "201":
+        '201':
           description: New assessment lodged
           content:
             application/json:
@@ -405,14 +411,14 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: "#/components/schemas/Empty"
-        "400":
+                    $ref: '#/components/schemas/Empty'
+        '400':
           description: Bad request
-        "409":
+        '409':
           description: Assessment with that assessmentId already exists
-        "403":
+        '403':
           description: Forbidden
-        "500":
+        '500':
           description: Server error
 
   /reports/assessors/status:
@@ -426,7 +432,7 @@ paths:
       operationId: mockedData.reports_assessors_status__get
       security:
         - oauth:
-            - "report:assessor:status"
+            - 'report:assessor:status'
       parameters:
         - in: query
           name: reportDate
@@ -435,9 +441,9 @@ paths:
           schema:
             type: string
             format: date
-            example: "2020-01-30"
+            example: '2020-01-30'
       responses:
-        "200":
+        '200':
           description: Report returned succesfully
           content:
             application/json:
@@ -450,13 +456,13 @@ paths:
                       assessorStatusEvents:
                         type: array
                         items:
-                          $ref: "#/components/schemas/AssessorQualificationChangeEvent"
-        "404":
-          description: "Report not found, likely because the date is in the future"
-        "403":
+                          $ref: '#/components/schemas/AssessorQualificationChangeEvent'
+        '404':
+          description: 'Report not found, likely because the date is in the future'
+        '403':
           description: Forbidden
 
-  "/migrations/assessors/{schemeAssessorId}":
+  '/migrations/assessors/{schemeAssessorId}':
     put:
       tags:
         - Migration
@@ -464,7 +470,7 @@ paths:
       operationId: mockedData.migrations_assessors_x__put
       security:
         - oauth:
-            - "migrate:assessor"
+            - 'migrate:assessor'
       parameters:
         - in: path
           name: schemeAssessorId
@@ -476,9 +482,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AssessorBody"
+              $ref: '#/components/schemas/AssessorBody'
       responses:
-        "200":
+        '200':
           description: Existing assessor updated
           content:
             application/json:
@@ -486,8 +492,8 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: "#/components/schemas/AssessorBody"
-        "201":
+                    $ref: '#/components/schemas/AssessorBody'
+        '201':
           description: New assessor succesfully registered
           content:
             application/json:
@@ -495,15 +501,15 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: "#/components/schemas/AssessorBody"
-        "400":
+                    $ref: '#/components/schemas/AssessorBody'
+        '400':
           description: Problem with assessor registration record
-        "403":
+        '403':
           description: Forbidden
-        "409":
+        '409':
           description: Assessor already exists on a different scheme
 
-  "/migrations/assessments/{assessmentId}":
+  '/migrations/assessments/{assessmentId}':
     put:
       tags:
         - Migration
@@ -511,21 +517,21 @@ paths:
       operationId: mockedData.migrations_assessments_x__put
       security:
         - oauth:
-            - "migrate:assessment"
+            - 'migrate:assessment'
       parameters:
         - in: path
           name: assessmentId
           required: true
           description: The ID of the assessment being added
           schema:
-            $ref: "#/components/schemas/AssessmentId"
+            $ref: '#/components/schemas/AssessmentId'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Empty"
+              $ref: '#/components/schemas/Empty'
       responses:
-        "200":
+        '200':
           description: Assessment added / replaced
           content:
             application/json:
@@ -533,8 +539,8 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: "#/components/schemas/Empty"
-        "201":
+                    $ref: '#/components/schemas/Empty'
+        '201':
           description: New assessment succesfully registered
           content:
             application/json:
@@ -542,15 +548,15 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: "#/components/schemas/Empty"
-        "400":
+                    $ref: '#/components/schemas/Empty'
+        '400':
           description: Bad request
-        "403":
+        '403':
           description: Forbidden
-        "500":
+        '500':
           description: Server error
 
-  "/migrations/addresses/{addressId}":
+  '/migrations/addresses/{addressId}':
     put:
       tags:
         - Migration
@@ -558,21 +564,21 @@ paths:
       operationId: mockedData.migrations_addresses_x__put
       security:
         - oauth:
-            - "migrate:address"
+            - 'migrate:address'
       parameters:
         - in: path
           name: addressId
           required: true
           description: The unique identifier of the address being added
           schema:
-            $ref: "#/components/schemas/AddressId"
+            $ref: '#/components/schemas/AddressId'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AddressBody"
+              $ref: '#/components/schemas/AddressBody'
       responses:
-        "200":
+        '200':
           description: Address updated
           content:
             application/json:
@@ -580,8 +586,8 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: "#/components/schemas/AddressBody"
-        "201":
+                    $ref: '#/components/schemas/AddressBody'
+        '201':
           description: Address added
           content:
             application/json:
@@ -589,33 +595,33 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: "#/components/schemas/AddressBody"
-        "400":
+                    $ref: '#/components/schemas/AddressBody'
+        '400':
           description: Bad request
-        "403":
+        '403':
           description: Forbidden
-        "500":
+        '500':
           description: Server error
 
-  "/greendeal/assessments/{assessmentId}":
+  '/greendeal/assessments/{assessmentId}':
     get:
       tags:
         - Green Deal
-      summary: "Get the Green Deal details from the assessment with reference
-        {assessmentId}"
+      summary: 'Get the Green Deal details from the assessment with reference
+        {assessmentId}'
       operationId: mockedData.greendeal_assessments_x__get
       security:
         - oauth:
-            - "greendeal:assessment:fetch"
+            - 'greendeal:assessment:fetch'
       parameters:
         - in: path
           name: assessmentId
           required: true
-          description: "The ID of the assessment being requested, usually RRN"
+          description: 'The ID of the assessment being requested, usually RRN'
           schema:
-            $ref: "#/components/schemas/AssessmentId"
+            $ref: '#/components/schemas/AssessmentId'
       responses:
-        "200":
+        '200':
           description: Green Deal Energy Performance data
           content:
             application/json:
@@ -626,34 +632,34 @@ paths:
                     type: object
                     properties:
                       assessment:
-                        $ref: "#/components/schemas/AssessmentGreenDealDetails"
-        "403":
+                        $ref: '#/components/schemas/AssessmentGreenDealDetails'
+        '403':
           description: Forbidden
-        "404":
+        '404':
           description: Assessment not found
-        "500":
+        '500':
           description: Server error
 
-  "/greendeal/rhi/assessments/{assessmentId}/latest":
+  '/greendeal/rhi/assessments/{assessmentId}/latest':
     get:
       tags:
         - Green Deal
-      summary: "Get the RHI details of the most recent Energy Performance
+      summary: 'Get the RHI details of the most recent Energy Performance
         Assessment for the address of the assessment with reference
-        {assessmentId}"
+        {assessmentId}'
       operationId: mockedData.greendeal_rhi_assessments_x_latest__get
       security:
         - oauth:
-            - "greendeal:assessment:fetch"
+            - 'greendeal:assessment:fetch'
       parameters:
         - in: path
           name: assessmentId
           required: true
-          description: "The ID of the assessment being requested, usually RRN"
+          description: 'The ID of the assessment being requested, usually RRN'
           schema:
-            $ref: "#/components/schemas/AssessmentId"
+            $ref: '#/components/schemas/AssessmentId'
       responses:
-        "200":
+        '200':
           description: RHI Energy Performance data
           content:
             application/json:
@@ -664,44 +670,44 @@ paths:
                     type: object
                     properties:
                       assessment:
-                        $ref: "#/components/schemas/AssessmentRHIDetails"
-        "400":
+                        $ref: '#/components/schemas/AssessmentRHIDetails'
+        '400':
           description: The assessmentId parameter is badly formatted
-        "403":
+        '403':
           description: Forbidden
-        "404":
+        '404':
           description: Assessment with this ID not found
-        "410":
+        '410':
           description: Assessment with this ID exists but is marked "Not for issue"
-        "500":
+        '500':
           description: Server error
 
-  "/greendeal/disclosure/assessments/{assessmentId}/plans":
+  '/greendeal/disclosure/assessments/{assessmentId}/plans':
     post:
       tags:
         - Green Deal
-      summary: "Disclose new live Green Deal plan to appear on EPC with RRN
-        {assessmentId}"
+      summary: 'Disclose new live Green Deal plan to appear on EPC with RRN
+        {assessmentId}'
       operationId: mockedData.greendeal_disclosure_assessments_x_plans__put
       security:
         - oauth:
-            - "greendeal:disclosure:update"
+            - 'greendeal:disclosure:update'
       parameters:
         - in: path
           name: assessmentId
           required: true
-          description: "The ID of the assessment being requested, usually RRN"
+          description: 'The ID of the assessment being requested, usually RRN'
           schema:
-            $ref: "#/components/schemas/AssessmentId"
+            $ref: '#/components/schemas/AssessmentId'
       requestBody:
         description: Green Deal disclosure data
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/GreenDealPlan"
+              $ref: '#/components/schemas/GreenDealPlan'
       responses:
-        "201":
+        '201':
           description: Green Deal disclosure successfully added
           content:
             application/json:
@@ -709,43 +715,43 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: "#/components/schemas/GreenDealPlan"
-        "400":
+                    $ref: '#/components/schemas/GreenDealPlan'
+        '400':
           description: Problem with Green Deal record request
-        "403":
+        '403':
           description: Forbidden
-        "404":
+        '404':
           description: Energy assessment with RRN assessmentId can not be found
-        "409":
+        '409':
           description: Plan with the submitted ID already exists
-        "500":
+        '500':
           description: Server error
 
-  "/greendeal/disclosure/plans/{planId}":
+  '/greendeal/disclosure/plans/{planId}':
     put:
       tags:
         - Green Deal
-      summary: "Update an existing Green Deal plan"
+      summary: 'Update an existing Green Deal plan'
       operationId: mockedData.greendeal_disclosure_plans_x__put
       security:
         - oauth:
-            - "greendeal:disclosure:update"
+            - 'greendeal:disclosure:update'
       parameters:
         - in: path
           name: planId
           required: true
-          description: "The ID of the plan being updated"
+          description: 'The ID of the plan being updated'
           schema:
-            $ref: "#/components/schemas/GreenDealPlanId"
+            $ref: '#/components/schemas/GreenDealPlanId'
       requestBody:
         description: Green Deal disclosure data
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/GreenDealPlan"
+              $ref: '#/components/schemas/GreenDealPlan'
       responses:
-        "200":
+        '200':
           description: Green Deal disclosure successfully updated
           content:
             application/json:
@@ -753,42 +759,42 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: "#/components/schemas/GreenDealPlan"
-        "400":
+                    $ref: '#/components/schemas/GreenDealPlan'
+        '400':
           description: Problem with Green Deal record request
-        "403":
+        '403':
           description: Forbidden
-        "404":
+        '404':
           description: Green Deal plan with ID planId can not be found
-        "409":
+        '409':
           description: Plan is not active or Identifier in request body doesn't match the planId in the URL
-        "500":
+        '500':
           description: Server error
     delete:
       tags:
         - Green Deal
-      summary: "Delete an existing Green Deal plan"
+      summary: 'Delete an existing Green Deal plan'
       operationId: mockedData.greendeal_disclosure_plans_x__delete
       security:
         - oauth:
-            - "greendeal:disclosure:update"
+            - 'greendeal:disclosure:update'
       parameters:
         - in: path
           name: planId
           required: true
-          description: "The ID of the plan being deleted"
+          description: 'The ID of the plan being deleted'
           schema:
-            $ref: "#/components/schemas/GreenDealPlanId"
+            $ref: '#/components/schemas/GreenDealPlanId'
       responses:
-        "204":
+        '204':
           description: Green Deal disclosure successfully deleted
-        "401":
+        '401':
           description: Unauthorized
-        "403":
+        '403':
           description: Forbidden
-        "404":
+        '404':
           description: Green Deal plan with ID planId can not be found
-        "500":
+        '500':
           description: Server error
 
 components:
@@ -801,22 +807,22 @@ components:
         clientCredentials:
           tokenUrl: /auth/oauth/token
           scopes:
-            "scheme:create": Create a new scheme on the register
-            "scheme:list": List schemes on the register
-            "scheme:assessor:list": List assessors
-            "scheme:assessor:update": Add or Update assessors
-            "scheme:assessor:fetch": Get full details of an individual assessor
-            "assessment:fetch": Get full details of an individual assessment
-            "assessment:lodge": Lodge a new assessment with the register
-            "assessment:search": Search the register for an assessment
-            "assessor:search": Search the register for an assessor
-            "address:search": List addresses that match a given search criteria, along with existing assessments
-            "migrate:assessment": Migrate an assessment to the register
-            "migrate:assessor": Migrate an assessor to the register
-            "migrate:address": Migrate an address to the register
-            "report:assessor:status": Get a report of changes to assessors status for a given date
-            "greendeal:assessment:fetch": Get limited details (RHI required fields) of an individual assessment
-            "greendeal:disclosure:update": Submit or update details of a Green Deal Plan
+            'scheme:create': Create a new scheme on the register
+            'scheme:list': List schemes on the register
+            'scheme:assessor:list': List assessors
+            'scheme:assessor:update': Add or Update assessors
+            'scheme:assessor:fetch': Get full details of an individual assessor
+            'assessment:fetch': Get full details of an individual assessment
+            'assessment:lodge': Lodge a new assessment with the register
+            'assessment:search': Search the register for an assessment
+            'assessor:search': Search the register for an assessor
+            'address:search': List addresses that match a given search criteria, along with existing assessments
+            'migrate:assessment': Migrate an assessment to the register
+            'migrate:assessor': Migrate an assessor to the register
+            'migrate:address': Migrate an address to the register
+            'report:assessor:status': Get a report of changes to assessors status for a given date
+            'greendeal:assessment:fetch': Get limited details (RHI required fields) of an individual assessment
+            'greendeal:disclosure:update': Submit or update details of a Green Deal Plan
 
   schemas:
     ## Addresses
@@ -824,46 +830,46 @@ components:
       type: object
       properties:
         source:
-          $ref: "#/components/schemas/AddressSource"
+          $ref: '#/components/schemas/AddressSource'
         line1:
-          $ref: "#/components/schemas/AddressLine1"
+          $ref: '#/components/schemas/AddressLine1'
         line2:
           type: string
-          example: ""
+          example: ''
         line3:
           type: string
-          example: ""
+          example: ''
         line4:
           type: string
-          example: ""
+          example: ''
         town:
-          $ref: "#/components/schemas/AddressTown"
+          $ref: '#/components/schemas/AddressTown'
         postcode:
-          $ref: "#/components/schemas/AddressPostcode"
+          $ref: '#/components/schemas/AddressPostcode'
 
     AddressBody:
-      $ref: "#/components/schemas/Address"
+      $ref: '#/components/schemas/Address'
 
     AddressDetail:
       allOf:
-        - $ref: "#/components/schemas/Address"
+        - $ref: '#/components/schemas/Address'
         - type: object
           properties:
             addressId:
-              $ref: "#/components/schemas/AddressId"
+              $ref: '#/components/schemas/AddressId'
             existingAssessments:
               type: array
               items:
                 type: object
                 properties:
                   assessmentId:
-                    $ref: "#/components/schemas/AssessmentId"
+                    $ref: '#/components/schemas/AssessmentId'
                   assessmentType:
-                    $ref: "#/components/schemas/AssessmentType"
+                    $ref: '#/components/schemas/AssessmentType'
 
     AddressId:
       type: string
-      example: "UPRN-716375734512"
+      example: 'UPRN-716375734512'
 
     AddressLine1:
       type: string
@@ -893,7 +899,7 @@ components:
             addresses:
               type: array
               items:
-                $ref: "#/components/schemas/AddressDetail"
+                $ref: '#/components/schemas/AddressDetail'
 
     # Assessors
     Assessor:
@@ -920,29 +926,29 @@ components:
               format: email
               example: j.t.bloggs@example.com
         qualifications:
-          $ref: "#/components/schemas/AssessorQualifications"
+          $ref: '#/components/schemas/AssessorQualifications'
 
     AssessorBody:
       allOf:
-        - $ref: "#/components/schemas/Assessor"
+        - $ref: '#/components/schemas/Assessor'
         - type: object
           properties:
             dateOfBirth:
               type: string
               format: date
-              example: "1980-01-10"
+              example: '1980-01-10'
             searchResultsComparisonPostcode:
-              $ref: "#/components/schemas/AddressPostcode"
+              $ref: '#/components/schemas/AddressPostcode'
 
     AssessorDetail:
       allOf:
-        - $ref: "#/components/schemas/Assessor"
+        - $ref: '#/components/schemas/Assessor'
         - type: object
           properties:
             assessorSchemeId:
-              $ref: "#/components/schemas/AssessorSchemeId"
+              $ref: '#/components/schemas/AssessorSchemeId'
             registeredBy:
-              $ref: "#/components/schemas/Scheme"
+              $ref: '#/components/schemas/Scheme'
 
     AssessorSearchResults:
       type: object
@@ -954,11 +960,11 @@ components:
               type: array
               items:
                 allOf:
-                  - $ref: "#/components/schemas/AssessorDetail"
+                  - $ref: '#/components/schemas/AssessorDetail'
 
     AssessorSearchByPostcodeResults:
       allOf:
-        - $ref: "#/components/schemas/AssessorSearchResults"
+        - $ref: '#/components/schemas/AssessorSearchResults'
         - type: object
           properties:
             data:
@@ -981,21 +987,21 @@ components:
       type: object
       properties:
         domesticRdSap:
-          $ref: "#/components/schemas/AssessorQualificationStatus"
+          $ref: '#/components/schemas/AssessorQualificationStatus'
         domesticSap:
-          $ref: "#/components/schemas/AssessorQualificationStatus"
+          $ref: '#/components/schemas/AssessorQualificationStatus'
         nonDomesticDec:
-          $ref: "#/components/schemas/AssessorQualificationStatus"
+          $ref: '#/components/schemas/AssessorQualificationStatus'
         nonDomesticNos3:
-          $ref: "#/components/schemas/AssessorQualificationStatus"
+          $ref: '#/components/schemas/AssessorQualificationStatus'
         nonDomesticNos4:
-          $ref: "#/components/schemas/AssessorQualificationStatus"
+          $ref: '#/components/schemas/AssessorQualificationStatus'
         nonDomesticNos5:
-          $ref: "#/components/schemas/AssessorQualificationStatus"
+          $ref: '#/components/schemas/AssessorQualificationStatus'
         nonDomesticSp3:
-          $ref: "#/components/schemas/AssessorQualificationStatus"
+          $ref: '#/components/schemas/AssessorQualificationStatus'
         nonDomesticCc4:
-          $ref: "#/components/schemas/AssessorQualificationStatus"
+          $ref: '#/components/schemas/AssessorQualificationStatus'
 
     AssessorQualificationSearchOptions:
       type: string
@@ -1021,7 +1027,7 @@ components:
     AssessorQualificationChangeEvent:
       type: object
       allOf:
-        - $ref: "#/components/schemas/AssessorDetail"
+        - $ref: '#/components/schemas/AssessorDetail'
       properties:
         qualificationChange:
           type: object
@@ -1030,11 +1036,11 @@ components:
               type: string
               example: domesticEnergyPerformanceCertificates
             previousStatus:
-              $ref: "#/components/schemas/AssessorQualificationStatus"
+              $ref: '#/components/schemas/AssessorQualificationStatus'
             newStatus:
               allOf:
-                - $ref: "#/components/schemas/AssessorQualificationStatus"
-                - example: "STRUCKOFF"
+                - $ref: '#/components/schemas/AssessorQualificationStatus'
+                - example: 'STRUCKOFF'
 
     AssessorFullName:
       type: string
@@ -1062,60 +1068,60 @@ components:
       type: object
       properties:
         address:
-          $ref: "#/components/schemas/Address"
+          $ref: '#/components/schemas/Address'
         countryCode:
           type: string
-          example: "EAW"
+          example: 'EAW'
         inspectionDate:
           type: string
           format: date
-          example: "2020-02-29"
+          example: '2020-02-29'
         lodgementDate:
           type: string
           format: date
-          example: "2020-02-29"
+          example: '2020-02-29'
         mainFuelType:
           type: string
-          example: "Natural Gas"
+          example: 'Natural Gas'
         secondaryFuelType:
           type: string
-          example: "Grid Supplied Electricity"
+          example: 'Grid Supplied Electricity'
         waterHeatingFuel:
           type: string
-          example: "Smokeless Fuel (inc Coke)"
+          example: 'Smokeless Fuel (inc Coke)'
 
     AssessmentRHIDetails:
       type: object
       properties:
         epcRrn:
-          $ref: "#/components/schemas/AssessmentId"
+          $ref: '#/components/schemas/AssessmentId'
         assessorName:
-          $ref: "#/components/schemas/AssessorFullName"
+          $ref: '#/components/schemas/AssessorFullName'
         reportType:
           type: string
-          example: "Energy Performance Certificate"
+          example: 'Energy Performance Certificate'
         inspectionDate:
           type: string
           format: date
-          example: "2020-01-30"
+          example: '2020-01-30'
         lodgementDate:
           type: string
           format: date
-          example: "2020-02-29"
+          example: '2020-02-29'
         dwellingType:
           type: string
-          example: "Top-floor flat"
+          example: 'Top-floor flat'
         postcode:
-          $ref: "#/components/schemas/AddressPostcode"
+          $ref: '#/components/schemas/AddressPostcode'
         propertyAgeBand:
           type: string
-          example: "D"
+          example: 'D'
         tenure:
           type: string
-          example: "Owner-occupied"
+          example: 'Owner-occupied'
         totalFloorArea:
           type: string
-          example: "123.5 square metres"
+          example: '123.5 square metres'
         cavityWallInsulation:
           type: boolean
           example: false
@@ -1124,15 +1130,15 @@ components:
           example: true
         spaceHeating:
           type: string
-          example: "Gas-fired central heating"
+          example: 'Gas-fired central heating'
         waterHeating:
           type: string
-          example: "Electrical immersion heater"
+          example: 'Electrical immersion heater'
         secondaryHeating:
           type: string
-          example: "Electric bar heater"
+          example: 'Electric bar heater'
         energyEfficiency:
-          $ref: "#/components/schemas/RHIEnergyEfficiency"
+          $ref: '#/components/schemas/RHIEnergyEfficiency'
 
     RHIEnergyEfficiency:
       type: object
@@ -1151,8 +1157,8 @@ components:
           example: C
 
     GreenDealPlanId:
-      description: "Green Deal plan ID - created by the Central Charge Database
-        (GDCC) when the plan is set up"
+      description: 'Green Deal plan ID - created by the Central Charge Database
+        (GDCC) when the plan is set up'
       type: string
       maxLength: 12
       example: ABC123456DEF
@@ -1161,93 +1167,93 @@ components:
       type: object
       properties:
         GreenDealPlanId:
-          $ref: "#/components/schemas/GreenDealPlanId"
+          $ref: '#/components/schemas/GreenDealPlanId'
         startDate:
           description: The date the plan went live
           type: string
           format: date
-          example: "2020-01-30"
+          example: '2020-01-30'
         endDate:
           description: The date the plan is expected to end
           type: string
           format: date
-          example: "2030-02-28"
+          example: '2030-02-28'
         providerDetails:
           description: Details relating to the provider of the plan
-          $ref: "#/components/schemas/GreenDealProvider"
+          $ref: '#/components/schemas/GreenDealProvider'
         interest:
-          $ref: "#/components/schemas/GreenDealInterest"
+          $ref: '#/components/schemas/GreenDealInterest'
         chargeUplift:
-          $ref: "#/components/schemas/GreenDealChargeUplift"
+          $ref: '#/components/schemas/GreenDealChargeUplift'
         ccaRegulated:
-          description: "Whether the Green Deal plan is regulated under the
-            Consumer Credit Act"
+          description: 'Whether the Green Deal plan is regulated under the
+            Consumer Credit Act'
           type: boolean
           example: true
         structureChanged:
-          description: "Whether the provider knows or has reasonable cause to
+          description: 'Whether the provider knows or has reasonable cause to
             believe that an alteration has been made to the Green
             Deal property which, had it existed when the estimated
             first year savings were calculated, would have affected
-            that calculation materially"
+            that calculation materially'
           type: boolean
           example: false
         measuresRemoved:
-          description: "Whether the provider knows or has reasonable cause to
+          description: 'Whether the provider knows or has reasonable cause to
             believe that an improvement installed at the Green Deal
             property under a green deal plan has been removed from
             the property before the end of the improvement-specific
-            payment period"
+            payment period'
           type: boolean
           example: false
         measures:
           type: array
           items:
-            $ref: "#/components/schemas/GreenDealMeasure"
+            $ref: '#/components/schemas/GreenDealMeasure'
         charges:
           type: array
           items:
-            $ref: "#/components/schemas/GreenDealCharge"
+            $ref: '#/components/schemas/GreenDealCharge'
         savings:
           type: array
           items:
-            $ref: "#/components/schemas/GreenDealSaving"
+            $ref: '#/components/schemas/GreenDealSaving'
 
     GreenDealProvider:
       type: object
       properties:
         name:
-          description: "Name of the provider organisation responsible for the
-            Green Deal plan"
+          description: 'Name of the provider organisation responsible for the
+            Green Deal plan'
           type: string
           maxLength: 400
-          example: "The Bank"
+          example: 'The Bank'
         telephone:
-          description: "Phone number of the provider organisation responsible
-            for the Green Deal plan"
+          description: 'Phone number of the provider organisation responsible
+            for the Green Deal plan'
           type: string
           maxLength: 100
-          example: "0800 0000000"
+          example: '0800 0000000'
         email:
-          description: "Email address of the provider organisation responsible
-            for the Green Deal plan"
+          description: 'Email address of the provider organisation responsible
+            for the Green Deal plan'
           type: string
           maxLength: 100
-          example: "lender@example.com"
+          example: 'lender@example.com'
 
     GreenDealInterest:
       type: object
       properties:
         rate:
-          description: "The interest rate (APR) on the Green Deal finance taken
-            out for the Green Deal plan"
+          description: 'The interest rate (APR) on the Green Deal finance taken
+            out for the Green Deal plan'
           type: number
           minimum: 0
           maximum: 10000
           example: 12.3
         fixed:
-          description: "Whether the interest rate on the Green Deal plan is
-            fixed over the lifetime of the plan"
+          description: 'Whether the interest rate on the Green Deal plan is
+            fixed over the lifetime of the plan'
           type: boolean
           example: true
 
@@ -1255,19 +1261,19 @@ components:
       type: object
       properties:
         amount:
-          description: "The percentage uplift in the Green Deal daily charge,
-            where applicable, otherwise zero"
+          description: 'The percentage uplift in the Green Deal daily charge,
+            where applicable, otherwise zero'
           type: number
           minimum: 0
           maximum: 1000
           example: 1.25
         date:
-          description: "The date when the Green Deal daily charge uplift takes
+          description: 'The date when the Green Deal daily charge uplift takes
             effect, where an annual interest uplift is included as a
-            term of the Green Deal plan"
+            term of the Green Deal plan'
           type: string
           format: date
-          example: "2025-03-29"
+          example: '2025-03-29'
 
     GreenDealMeasure:
       type: object
@@ -1276,21 +1282,21 @@ components:
           type: integer
           example: 0
         measureType:
-          description: "The measure type of the specific measure installed under
-            the Green Deal plan"
+          description: 'The measure type of the specific measure installed under
+            the Green Deal plan'
           type: string
-          example: "Loft insulation"
+          example: 'Loft insulation'
         product:
-          description: "The product name of the specific measure installed under
-            the Green Deal plan"
+          description: 'The product name of the specific measure installed under
+            the Green Deal plan'
           type: string
-          example: "WarmHome lagging stuff (TM)"
+          example: 'WarmHome lagging stuff (TM)'
         repaidDate:
-          description: "Date the measure will be paid off under the Green Deal
-            plan payment schedule"
+          description: 'Date the measure will be paid off under the Green Deal
+            plan payment schedule'
           type: string
           format: date
-          example: "2025-03-29"
+          example: '2025-03-29'
 
     GreenDealCharge:
       type: object
@@ -1299,24 +1305,24 @@ components:
           type: integer
           example: 0
         startDate:
-          description: "The start date at which the specified daily charge
-            starts taking effect"
+          description: 'The start date at which the specified daily charge
+            starts taking effect'
           type: string
           format: date
-          example: "2020-03-29"
+          example: '2020-03-29'
         endDate:
-          description: "The end date at which the specified daily charge stops
-            taking effect"
+          description: 'The end date at which the specified daily charge stops
+            taking effect'
           type: string
           format: date
-          example: "2030-03-29"
+          example: '2030-03-29'
         dailyCharge:
-          description: "The daily amount the customer will be paying through
-            their electricity bill"
+          description: 'The daily amount the customer will be paying through
+            their electricity bill'
           type: number
           minimum: 0
           maximum: 10000
-          example: "0.34"
+          example: '0.34'
 
     GreenDealSaving:
       type: object
@@ -1325,21 +1331,21 @@ components:
           type: integer
           example: 0
         fuelCode:
-          description: "Code which indicates the type of heating fuel"
+          description: 'Code which indicates the type of heating fuel'
           type: string
-          example: "LPG"
+          example: 'LPG'
         fuelSaving:
-          description: "Total kWh saving for the fuel (negative if increase),
-            allowing for in-use factors"
+          description: 'Total kWh saving for the fuel (negative if increase),
+            allowing for in-use factors'
           type: number
           minimum: -10000000
           maximum: 10000000
         standingChargeFraction:
-          description: "Fraction of standing charge for the fuel applicable to
+          description: 'Fraction of standing charge for the fuel applicable to
             the saving, negative if standing charge applies after
             improvements but not before, positive if standing
             charge applies before improvements but not after,
-            zero otherwise"
+            zero otherwise'
           type: number
           minimum: -1
           maximum: 1
@@ -1348,7 +1354,7 @@ components:
     # Schemes
     Scheme:
       allOf:
-        - $ref: "#/components/schemas/SchemeBody"
+        - $ref: '#/components/schemas/SchemeBody'
         - type: object
           properties:
             schemeId:

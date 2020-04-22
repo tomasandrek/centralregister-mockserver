@@ -191,7 +191,7 @@ def assessors__get() -> str:
 
 
 def search_addresses__get(**query):
-    if 'postcode' not in query and 'street' not in query and 'addressId' not in query:
+    if 'postcode' not in query and 'street' not in query and 'buildingReferenceNumber' not in query:
         return [], 500
 
     items = [x for x in addresses]
@@ -209,9 +209,10 @@ def search_addresses__get(**query):
         town = query['town']
         items = [x for x in items if x.town == town]
 
-    if 'addressId' in query:
-        addressId = query['addressId']
-        items = [x for x in addresses if x.addressId == addressId]
+    if 'buildingReferenceNumber' in query:
+        buildingReferenceNumber = query['buildingReferenceNumber']
+        items = [x for x in addresses if x.addressId ==
+                 buildingReferenceNumber]
 
     json_dump = json.dumps([ob.__dict__ for ob in items])
     return Response(json_dump, status=200, mimetype='application/json')
