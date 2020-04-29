@@ -65,13 +65,16 @@ addresses.append(address("GAZETTEER", "Apartment 219", "10, Edward Street",
 
 
 def schemes__get():
-    response = [{
-        "schemeId": 3,
-        "name": "Test Schema 01"
-    }, {
-        "schemeId": 60,
-        "name": "Test Schema 02"
-    }]
+    response = {
+        "data": {
+            "schemes": [
+                {
+                    "name": "Elmhurst",
+                    "schemeId": 3
+                }
+            ]
+        }
+    }
 
     return response, 200
 
