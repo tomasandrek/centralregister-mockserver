@@ -222,6 +222,10 @@ def assessments_x__get() -> str:
     return 'assessments_x__get'
 
 
+def assessments_x__post(assessmentId, assessmentType) -> str:
+    return 'assessments_x__post assessmentId={assessmentId} assessmentType={assessmentType}'.format(assessmentId=assessmentId, assessmentType=assessmentType)
+
+
 def assessments_x_x__post(assessmentType, assessmentId) -> str:
     return 'assessments_x_x__post assessmentType={assessmentType} assessmentId={assessmentId}'.format(assessmentType=assessmentType, assessmentId=assessmentId)
 
