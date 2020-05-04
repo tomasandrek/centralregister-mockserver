@@ -225,12 +225,8 @@ def assessments_x__get() -> str:
     return 'assessments_x__get'
 
 
-def assessments_x__post(assessmentId, assessmentType) -> str:
-    return 'assessments_x__post assessmentId={assessmentId} assessmentType={assessmentType}'.format(assessmentId=assessmentId, assessmentType=assessmentType)
-
-
-def assessments_x_x__post(assessmentType, assessmentId) -> str:
-    return 'assessments_x_x__post assessmentType={assessmentType} assessmentId={assessmentId}'.format(assessmentType=assessmentType, assessmentId=assessmentId)
+def assessments_x__post(assessmentId) -> str:
+    return 'assessments_x__post assessmentId={assessmentId}'.format(assessmentId=assessmentId)
 
 
 def reports_assessors_status__get() -> str:
@@ -241,8 +237,8 @@ def migrations_assessors_x__put(schemeAssessorId) -> str:
     return 'schemes_x_assessors_x__put  schemeAssessorId={schemeAssessorId}'.format(schemeAssessorId=schemeAssessorId)
 
 
-def migrations_assessments_x__put(assessmentId) -> str:
-    return 'migrations_assessments_x__put  assessmentId={assessmentId}'.format(assessmentId=assessmentId)
+def assessments_domesticepc_x__put(assessmentId) -> str:
+    return 'assessments_domesticepc_x__put  assessmentId={assessmentId}'.format(assessmentId=assessmentId)
 
 
 def migrations_addresses_x__put(addressId):
