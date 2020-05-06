@@ -229,6 +229,10 @@ def assessments_x__post(assessmentId):
     return 'Assessment was lodged', 201
 
 
+def assessments_x_status__post(assessmentId) -> str:
+    return 'assessments_x_status__post  assessmentId={assessmentId}'.format(assessmentId=assessmentId)
+
+
 def reports_assessors_status__get() -> str:
     return 'reports_assessors_status__get'
 
