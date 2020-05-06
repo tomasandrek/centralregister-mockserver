@@ -1605,7 +1605,7 @@ components:
           example: EPCs 4 U
 
     Empty:
-      type: object
+      type: string
 
   links: {}
   callbacks: {}
