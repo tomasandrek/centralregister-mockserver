@@ -1351,8 +1351,26 @@ components:
     AssessmentGreenDealDetails:
       type: object
       properties:
+        typeOfAssessment:
+          type: string
+          enum: [SAP, RdSAP]
         address:
           $ref: '#/components/schemas/Address'
+        addressIdentifiers:
+          description:
+            'List of address identifiers associated with this assessment - these may include:
+            * OS gazetteer UPRNS (prefixed UPRN-)
+            * Legacy reference numbers from the old register system (prefixed LPRN-)
+            * Reference numbers for reports for this address (prefixed RRN-)'
+          type: array
+          items:
+            $ref: '#/components/schemas/AddressId'
+          example:
+            [
+              'UPRN-716375734512',
+              'LPRN-1234567890',
+              'RRN-1234-1234-1234-1234-1234',
+            ]
         countryCode:
           type: string
           example: 'EAW'
@@ -1367,6 +1385,13 @@ components:
         isLatestAssessmentForAddress:
           type: boolean
           example: true
+        status:
+          type: string
+          example: CANCELLED
+          enum:
+            - CANCELLED
+            - LATEST
+            - SUPERSEDED
         mainFuelType:
           type: string
           example: 'Natural Gas'
