@@ -1039,6 +1039,9 @@ components:
               example: j.t.bloggs@example.com
         qualifications:
           $ref: '#/components/schemas/AssessorQualifications'
+        alsoKnownAs:
+          type: string
+          example: Jo
 
     AssessorBody:
       allOf:
@@ -1051,6 +1054,10 @@ components:
               example: '1980-01-10'
             searchResultsComparisonPostcode:
               $ref: '#/components/schemas/AddressPostcode'
+            address:
+              $ref: '#/components/schemas/AssessorAddress'
+            companyDetails:
+              $ref: '#/components/schemas/CompanyDetails'
 
     AssessorDetail:
       allOf:
@@ -1111,6 +1118,55 @@ components:
             searchResultsComparisonPostcode:
               $ref: '#/components/schemas/AddressPostcode'
 
+    AssessorAddress:
+      type: object
+      properties:
+        addressLine1:
+          $ref: '#/components/schemas/AddressLine1'
+        addressLine2:
+          type: string
+          example: ''
+        addressLine3:
+          type: string
+          example: ''
+        addressLine4:
+          type: string
+          example: ''
+        town:
+          $ref: '#/components/schemas/AddressTown'
+        postcode:
+          $ref: '#/components/schemas/AddressPostcode'
+
+    CompanyDetails:
+      type: object
+      properties:
+        companyRegNo:
+          type: string
+          example: ''
+        companyAddressLine1:
+          $ref: '#/components/schemas/AddressLine1'
+        companyAddressLine2:
+          type: string
+          example: ''
+        companyAddressLine3:
+          type: string
+          example: ''
+        companyTown:
+          $ref: '#/components/schemas/AddressTown'
+        companyPostcode:
+          $ref: '#/components/schemas/AddressPostcode'
+        companyWebsite:
+          type: string
+          example: ''
+        companyTelephoneNumber:
+          type: string
+          example: ''
+        companyEmail:
+          type: string
+          example: ''
+        companyName:
+          type: string
+          example: ''
     AssessorQualifications:
       type: object
       properties:
@@ -1130,6 +1186,8 @@ components:
           $ref: '#/components/schemas/AssessorQualificationStatus'
         nonDomesticCc4:
           $ref: '#/components/schemas/AssessorQualificationStatus'
+        gda:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
 
     AssessorQualificationSearchOptions:
       type: string
@@ -1142,6 +1200,7 @@ components:
         - nonDomesticNos5
         - nonDomesticSp3
         - nonDomesticCc4
+        - gda
 
     AssessorQualificationStatus:
       type: string
@@ -1409,11 +1468,10 @@ components:
           example: true
         status:
           type: string
-          example: CANCELLED
+          example: ENTERED
           enum:
-            - CANCELLED
-            - LATEST
-            - SUPERSEDED
+            - ENTERED
+            - NOT FOR ISSUE
         mainFuelType:
           type: string
           example: 'Natural Gas'
