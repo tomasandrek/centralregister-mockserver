@@ -218,7 +218,15 @@ def search_addresses__get(**query):
                  buildingReferenceNumber]
 
     json_dump = json.dumps([ob.__dict__ for ob in items])
-    return Response(json_dump, status=200, mimetype='application/json')
+
+    json_response = """{
+        data: {
+            addresses: 
+                """ + json_dump + """
+        }
+    }"""
+
+    return Response(json_response, status=200, mimetype='application/json')
 
 
 def assessments_x__get() -> str:
@@ -227,6 +235,7 @@ def assessments_x__get() -> str:
 
 def assessments_x__post(assessmentId):
     return 'Assessment was lodged', 201
+    # return 'Duplicate RRN', 409
 
 
 def assessments_x_status__post(assessmentId) -> str:
