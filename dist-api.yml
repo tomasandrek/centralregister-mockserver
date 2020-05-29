@@ -336,59 +336,36 @@ paths:
               schema:
                 $ref: '#/components/schemas/AddressSearchResults'
 
-  '/assessments/{assessmentId}':
-    get:
-      tags:
-        - Manage Assessments
-      summary: Get an Energy Performance Assessment
-      operationId: mockedData.assessments_x__get
-      security:
-        - oauth:
-            - 'assessment:fetch'
-      parameters:
-        - in: path
-          name: assessmentId
-          required: true
-          description: 'The ID of the assessment being requested, usually RRN'
-          schema:
-            $ref: '#/components/schemas/AssessmentId'
-      responses:
-        '200':
-          description: Energy Performance Assessment
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    $ref: '#/components/schemas/Empty'
-            application/xml:
-              schema:
-                type: object
-                properties:
-                  data:
-                    $ref: '#/components/schemas/Empty'
-        '403':
-          description: Forbidden
-        '404':
-          description: Assessment not found
-        '500':
-          description: Server error
+  /assessments:
     post:
       tags:
         - Manage Assessments
       summary: Lodge a new assessment
       operationId: mockedData.assessments_x__post
+      description: 'Single endpoint for POSTing all new lodgements.
+        It will accept as XML payload:
+        * A single <Report> for a domestic RdSAP assessment
+        * A single <Report> for a domestic SAP assessment
+        * Non-domestic EPC and Recommendation report in a single XML
+        payload with two <Report> elements
+        * Air Conditioning certificate and AC-report in a single XML
+        payload with two <Report> elements
+        * A single <Report> for DEC
+        * A single <Report> for DEC recommendation report
+        * DEC and DEC-RR in a single XML payload with two <Report>
+        elements'
       security:
         - oauth:
             - 'assessment:lodge'
       parameters:
-        - in: path
-          name: assessmentId
-          required: true
-          description: 'The ID of the assessment being added, usually RRN'
+        - in: query
+          name: override
           schema:
-            $ref: '#/components/schemas/AssessmentId'
+            type: boolean
+          example: true
+          description: 'Only set to true after assessor has manually confirmed
+            desire to override lodgement rules. This action will be
+            logged.'
       requestBody:
         content:
           application/xml+RdSAP-Schema-19.0:
@@ -411,7 +388,7 @@ paths:
               $ref: '#/components/schemas/Empty'
       responses:
         '201':
-          description: New assessment lodged
+          description: New assessment(s) successfully lodged
           content:
             application/json:
               schema:
@@ -455,11 +432,75 @@ paths:
                         type: integer
                         example: -21
         '400':
-          description: Bad request
+          description: Bad request - assessment violates lodgement rules. Re-POST to the override link to lodge anyway.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        errorCode:
+                          type: string
+                          example: 'FLOOR_AREA_LESS_THAN_ZERO'
+                        errorDescription:
+                          type: string
+                          example: 'Floor-Area must be greater than zero'
+                  meta:
+                    type: object
+                    properties:
+                      links:
+                        type: object
+                        properties:
+                          override:
+                            type: string
+                            example: '/assessments?override=true'
         '409':
-          description: Assessment with that assessmentId already exists
+          description: Assessment with that assessmentId already exists - retry with different RRN
         '403':
           description: Forbidden
+        '500':
+          description: Server error
+
+  '/assessments/{assessmentId}':
+    get:
+      tags:
+        - Manage Assessments
+      summary: Get an Energy Performance Assessment
+      operationId: mockedData.assessments_x__get
+      security:
+        - oauth:
+            - 'assessment:fetch'
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          description: 'The ID of the assessment being requested, usually RRN'
+          schema:
+            $ref: '#/components/schemas/AssessmentId'
+      responses:
+        '200':
+          description: Energy Performance Assessment
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Empty'
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Empty'
+        '403':
+          description: Forbidden
+        '404':
+          description: Assessment not found
         '500':
           description: Server error
 
@@ -591,7 +632,7 @@ paths:
         '409':
           description: Assessor already exists on a different scheme
 
-  '/assessments/domectic-epc/{assessmentId}':
+  '/assessments/domestic-epc/{assessmentId}':
     put:
       tags:
         - Migration
@@ -790,7 +831,7 @@ paths:
         '404':
           description: Assessment with this ID not found
         '410':
-          description: Assessment with this ID exists but is marked "Not for issue"
+          description: Assessment with this ID exists but has been CANCELLED
         '500':
           description: Server error
 
@@ -937,7 +978,7 @@ components:
             'greendeal:disclosure:update': Submit or update details of a Green Deal Plan
 
   schemas:
-    ## Addresses
+    # Addresses
     Address:
       type: object
       properties:
@@ -976,6 +1017,8 @@ components:
                 properties:
                   assessmentId:
                     $ref: '#/components/schemas/AssessmentId'
+                  assessmentStatus:
+                    $ref: '#/components/schemas/AssessmentStatus'
                   assessmentType:
                     $ref: '#/components/schemas/AssessmentType'
 
@@ -1167,6 +1210,7 @@ components:
         companyName:
           type: string
           example: ''
+
     AssessorQualifications:
       type: object
       properties:
@@ -1245,6 +1289,8 @@ components:
           type: string
           example: CANCELLED
           enum:
+            - ENTERED
+            - EXPIRED
             - CANCELLED
 
     AssessmentType:
@@ -1467,11 +1513,7 @@ components:
           type: boolean
           example: true
         status:
-          type: string
-          example: ENTERED
-          enum:
-            - ENTERED
-            - NOT FOR ISSUE
+          $ref: '#/components/schemas/AssessmentStatus'
         mainFuelType:
           type: string
           example: 'Natural Gas'
