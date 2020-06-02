@@ -1,5 +1,6 @@
 import connexion
 import json
+import xml.etree.ElementTree as ET
 from flask import Response
 
 
@@ -234,8 +235,16 @@ def assessments_x__get() -> str:
 
 
 def assessments_x__post(assessmentId):
-    return 'Assessment was lodged', 201
-    # return 'Duplicate RRN', 409
+    request_body = connexion.request.data
+    try:
+        xml = ET.fromstring(request_body)
+        address = xml.find('{https://epbr.digital.communities.gov.uk/xsd/rdsap}Report-Header').find('{https://epbr.digital.communities.gov.uk/xsd/rdsap}Property').find('{https://epbr.digital.communities.gov.uk/xsd/rdsap}Address').find('{https://epbr.digital.communities.gov.uk/xsd/rdsap}Address-Line-1').text
+        if address == addresses[2].line1: # Hardcoded address to simulate a duplicate RRN
+            return 'Duplicate RRN', 409
+        else:
+            return 'Assessment was lodged', 201    
+    except:
+        return 'Assessment was lodged', 201    
 
 
 def assessments_x_status__post(assessmentId) -> str:
