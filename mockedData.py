@@ -20,9 +20,9 @@ class address:
 addresses = []
 addresses.append(address("GAZETTEER", "2 Marsham Street", "Line 2",
                          "Line 3", "", "London", "SW1P 4JA", "UPRN-7163757", []))
-addresses.append(address("PREVIOUS_CERTIFICATE", "2 Marsham Street", "Line2",
+addresses.append(address("PREVIOUS_ASSESSMENT", "2 Marsham Street", "Line2",
                          "Line3", "", "London", "SW1P 4JA", "RRN-8290-6027-4450-1230-9999", []))
-addresses.append(address("PREVIOUS_CERTIFICATE", "10 Marsham Street",
+addresses.append(address("PREVIOUS_ASSESSMENT", "10 Marsham Street",
                          "", "", "", "London", "SW1P 4JA", "RRN-8290-6027-4450-1230-5296", []))
 
 addresses.append(address("GAZETTEER", "Elmhurst Energy Systems Ltd", "16 St. Johns Business Park",
@@ -55,7 +55,7 @@ addresses.append(address("GAZETTEER", "Atos Healthcare", "Metropolitan Building 
                          "", "", "BELFAST", "BT2 8ED", "UPRN-17742221232", []))
 addresses.append(address("GAZETTEER", "Belfast Health Cities", "Gordon House, 22-24, Lombard Street",
                          "", "", "BELFAST", "BT1 1RD", "UPRN-47742221232", []))
-addresses.append(address("PREVIOUS_CERTIFICATE", "17a, Moss Road", "Ballinaskeagh",
+addresses.append(address("PREVIOUS_ASSESSMENT", "17a, Moss Road", "Ballinaskeagh",
                          "", "", "BANBRIDGE", "BT32 5EF", "RRN-1110-6027-4450-1230-5296", []))
 addresses.append(address("GAZETTEER", "78, St. James's Road", "",
                          "", "", "BELFAST", "BT12 6ED", "UPRN-88742110232", []))
@@ -195,7 +195,7 @@ def assessors__get() -> str:
 
 
 def search_addresses__get(**query):
-    if 'postcode' not in query and 'street' not in query and 'buildingReferenceNumber' not in query:
+    if 'postcode' not in query and 'street' not in query and 'addressId' not in query:
         return [], 500
 
     items = [x for x in addresses]
@@ -213,10 +213,10 @@ def search_addresses__get(**query):
         town = query['town']
         items = [x for x in items if x.town == town]
 
-    if 'buildingReferenceNumber' in query:
-        buildingReferenceNumber = query['buildingReferenceNumber']
+    if 'addressId' in query:
+        addressId = query['addressId']
         items = [x for x in addresses if x.addressId ==
-                 buildingReferenceNumber]
+                 addressId]
 
     json_dump = json.dumps([ob.__dict__ for ob in items])
 
@@ -238,13 +238,15 @@ def assessments_x__post(assessmentId):
     request_body = connexion.request.data
     try:
         xml = ET.fromstring(request_body)
-        address = xml.find('{https://epbr.digital.communities.gov.uk/xsd/rdsap}Report-Header').find('{https://epbr.digital.communities.gov.uk/xsd/rdsap}Property').find('{https://epbr.digital.communities.gov.uk/xsd/rdsap}Address').find('{https://epbr.digital.communities.gov.uk/xsd/rdsap}Address-Line-1').text
-        if address == addresses[2].line1: # Hardcoded address to simulate a duplicate RRN
+        address = xml.find('{https://epbr.digital.communities.gov.uk/xsd/rdsap}Report-Header').find('{https://epbr.digital.communities.gov.uk/xsd/rdsap}Property').find(
+            '{https://epbr.digital.communities.gov.uk/xsd/rdsap}Address').find('{https://epbr.digital.communities.gov.uk/xsd/rdsap}Address-Line-1').text
+        # Hardcoded address to simulate a duplicate RRN
+        if address == addresses[2].line1:
             return 'Duplicate RRN', 409
         else:
-            return 'Assessment was lodged', 201    
+            return 'Assessment was lodged', 201
     except:
-        return 'Assessment was lodged', 201    
+        return 'Assessment was lodged', 201
 
 
 def assessments_x_status__post(assessmentId) -> str:
