@@ -238,7 +238,11 @@ def assessments_x__post():
     request_body = connexion.request.data
     try:
         xml = ET.fromstring(request_body)
-        address = xml.find('{https://epbr.digital.communities.gov.uk/xsd/rdsap}Report-Header').find('{https://epbr.digital.communities.gov.uk/xsd/rdsap}Property').find(
+        if connexion.request.headers['Content-Type'] == 'application/xml+SAP-Schema-17.1':
+            address = xml.find('{https://epbr.digital.communities.gov.uk/xsd/sap}Report-Header').find('{https://epbr.digital.communities.gov.uk/xsd/sap}Property').find(
+            '{https://epbr.digital.communities.gov.uk/xsd/sap}Address').find('{https://epbr.digital.communities.gov.uk/xsd/sap}Address-Line-1').text
+        else:
+            address = xml.find('{https://epbr.digital.communities.gov.uk/xsd/rdsap}Report-Header').find('{https://epbr.digital.communities.gov.uk/xsd/rdsap}Property').find(
             '{https://epbr.digital.communities.gov.uk/xsd/rdsap}Address').find('{https://epbr.digital.communities.gov.uk/xsd/rdsap}Address-Line-1').text
         # Hardcoded address to simulate a duplicate RRN
         if address == addresses[2].line1:
