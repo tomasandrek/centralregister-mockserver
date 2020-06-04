@@ -234,7 +234,7 @@ def assessments_x__get() -> str:
     return 'assessments_x__get'
 
 
-def assessments_x__post(assessmentId):
+def assessments_x__post():
     request_body = connexion.request.data
     try:
         xml = ET.fromstring(request_body)
