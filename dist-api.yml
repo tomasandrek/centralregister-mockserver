@@ -383,7 +383,7 @@ paths:
           application/xml+CEPC-7.1:
             schema:
               $ref: '#/components/schemas/Empty'
-          application/xml+NI-CEPC-7.1:
+          application/xml+CEPC-NI-7.1:
             schema:
               $ref: '#/components/schemas/Empty'
       responses:
@@ -1341,9 +1341,6 @@ components:
           enum: [SAP, RdSAP]
         dwellingType:
           type: string
-        addressSummary:
-          type: string
-          example: 2 Marsham Street, London, SW1P 4JA
         currentCarbonEmission:
           type: number
           description: The current carbon emission of the property
