@@ -501,6 +501,7 @@ paths:
       tags:
         - Migration
       summary: Migrate an existing Energy Performance Assessment to the register
+      operationId: mockedData.assessments_x__put
       security:
         - oauth:
             - 'migrate:assessment'

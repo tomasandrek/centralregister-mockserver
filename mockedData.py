@@ -234,16 +234,20 @@ def assessments_x__get() -> str:
     return 'assessments_x__get'
 
 
+def assessments_x__put() -> str:
+    return 'assessments_x__put'
+
+
 def assessments_x__post():
     request_body = connexion.request.data
     try:
         xml = ET.fromstring(request_body)
         if connexion.request.headers['Content-Type'] == 'application/xml+SAP-Schema-17.1':
             address = xml.find('{https://epbr.digital.communities.gov.uk/xsd/sap}Report-Header').find('{https://epbr.digital.communities.gov.uk/xsd/sap}Property').find(
-            '{https://epbr.digital.communities.gov.uk/xsd/sap}Address').find('{https://epbr.digital.communities.gov.uk/xsd/sap}Address-Line-1').text
+                '{https://epbr.digital.communities.gov.uk/xsd/sap}Address').find('{https://epbr.digital.communities.gov.uk/xsd/sap}Address-Line-1').text
         else:
             address = xml.find('{https://epbr.digital.communities.gov.uk/xsd/rdsap}Report-Header').find('{https://epbr.digital.communities.gov.uk/xsd/rdsap}Property').find(
-            '{https://epbr.digital.communities.gov.uk/xsd/rdsap}Address').find('{https://epbr.digital.communities.gov.uk/xsd/rdsap}Address-Line-1').text
+                '{https://epbr.digital.communities.gov.uk/xsd/rdsap}Address').find('{https://epbr.digital.communities.gov.uk/xsd/rdsap}Address-Line-1').text
         # Hardcoded address to simulate a duplicate RRN
         if address == addresses[2].line1:
             return 'Duplicate RRN', 409
@@ -263,10 +267,6 @@ def reports_assessors_status__get() -> str:
 
 def migrations_assessors_x__put(schemeAssessorId) -> str:
     return 'schemes_x_assessors_x__put  schemeAssessorId={schemeAssessorId}'.format(schemeAssessorId=schemeAssessorId)
-
-
-def assessments_domesticepc_x__put(assessmentId) -> str:
-    return 'assessments_domesticepc_x__put  assessmentId={assessmentId}'.format(assessmentId=assessmentId)
 
 
 def migrations_addresses_x__put(addressId):
