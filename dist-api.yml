@@ -592,7 +592,7 @@ paths:
               type: object
               properties:
                 status:
-              $ref: '#/components/schemas/AssessmentStatus'
+                  $ref: '#/components/schemas/AssessmentStatus'
       responses:
         '200':
           description: Assessment report status updated
