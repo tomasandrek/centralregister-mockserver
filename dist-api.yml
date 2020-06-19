@@ -605,7 +605,7 @@ paths:
                     type: object
                     properties:
                       status:
-                    $ref: '#/components/schemas/AssessmentStatus'
+                        $ref: '#/components/schemas/AssessmentStatus'
         '400':
           description: Bad request - assessmentId parameter was badly formatted
         '403':
