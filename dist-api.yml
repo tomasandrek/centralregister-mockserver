@@ -400,7 +400,7 @@ paths:
                       assessments:
                         type: array
                         items:
-                          type: object
+                          type: string
                           properties:
                             assessmentId:
                               $ref: '#/components/schemas/AssessmentId'
@@ -421,8 +421,8 @@ paths:
                               type: string
                             example:
                               [
-                                '/assessments/9876-9876-9876-9876-9876',
-                                '/assessments/8765-8765-8765-8765-8765',
+                                '/api/assessments/9876-9876-9876-9876-9876',
+                                '/api/assessments/8765-8765-8765-8765-8765',
                               ]
         '400':
           description: Bad request - assessment violates lodgement rules. Re-POST to the override link to lodge anyway.
@@ -1053,6 +1053,14 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/AddressDetail'
+        meta:
+          type: object
+          properties:
+            filters:
+              type: object
+              description: >-
+                The filters object will contain the search parameters provided
+                in the initial request.
 
     # Assessors
     Assessor:
