@@ -195,7 +195,7 @@ def assessors__get() -> str:
 
 
 def search_addresses__get(**query):
-    if 'postcode' not in query and 'street' not in query and 'addressId' not in query:
+    if 'postcode' not in query and 'street' not in query and 'addressId' not in query and 'town' not in query:
         return [], 500
 
     items = [x for x in addresses]
