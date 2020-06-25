@@ -205,6 +205,10 @@ def search_addresses__get(**query):
         if (postcode != ''):
             items = [x for x in items if x.postcode == postcode]
 
+    if 'buildingNameNumber' in query:
+        buildingNameNumber = query['buildingNameNumber']
+        items = [x for x in items if x.line1 == buildingNameNumber]
+
     if 'street' in query:
         street = query['street']
         items = [x for x in items if x.line1 == street]
