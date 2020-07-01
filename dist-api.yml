@@ -6,11 +6,11 @@ info:
   version: 1.0.0-rc4
 
 servers:
-  - url: 'https://api.epb-integration.digital.communities.gov.uk/'
+  - url: 'https://api.epb-integration.digital.communities.gov.uk/api'
     description: Integration Service
-  - url: 'https://api.epb-staging.digital.communities.gov.uk/'
+  - url: 'https://api.epb-staging.digital.communities.gov.uk/api'
     description: Staging Service
-  - url: 'https://api.epb.digital.communities.gov.uk/'
+  - url: 'https://api.epb.digital.communities.gov.uk/api'
     description: Production Service
 
 tags:
@@ -494,6 +494,10 @@ paths:
           description: Forbidden
         '404':
           description: Assessment not found
+        '410':
+          description: >-
+            Assessment no long accessible
+            (could have been cancelled or marked not for issue)
         '500':
           description: Server error
 
@@ -609,9 +613,15 @@ paths:
         '400':
           description: Bad request - assessmentId parameter was badly formatted
         '403':
-          description: Forbidden - the assessment with that assessmentId does not belong to your scheme
+          description: >-
+            Forbidden - the assessment with that assessmentId does not
+            belong to your scheme
         '404':
           description: Assessment with that assessmentId not found
+        '410':
+          description: >-
+            Assessment with that assessmentId has already been
+            cancelled or marked not for issue
         '500':
           description: Server error
 
@@ -801,7 +811,7 @@ paths:
       operationId: mockedData.greendeal_rhi_assessments_x_latest__get
       security:
         - oauth:
-            - 'greendeal:assessment:fetch'
+            - 'greendeal:plans'
       parameters:
         - in: path
           name: assessmentId
