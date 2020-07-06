@@ -289,6 +289,10 @@ def greendeal_assessments_x__get() -> str:
     return 'greendeal_assessments_x__get'
 
 
+def greendeal_assessments_x_xml__get() -> str:
+    return 'greendeal_assessments_x_xml__get'
+
+
 def greendeal_rhi_assessments_x_latest__get() -> str:
     return 'greendeal_rhi_assessments_x_latest__get'
 
