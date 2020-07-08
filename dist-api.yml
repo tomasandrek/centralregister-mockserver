@@ -368,16 +368,16 @@ paths:
             logged.'
       requestBody:
         content:
-          application/xml+RdSAP-Schema-19.0:
+          application/xml+RdSAP-Schema-20.0.0:
             schema:
               $ref: '#/components/schemas/Empty'
-          application/xml+SAP-Schema-17.1:
+          application/xml+SAP-Schema-18.0.0:
             schema:
               $ref: '#/components/schemas/Empty'
-          application/xml+RdSAP-Schema-NI-19.0:
+          application/xml+RdSAP-Schema-NI-20.0.0:
             schema:
               $ref: '#/components/schemas/Empty'
-          application/xml+SAP-Schema-NI-17.4:
+          application/xml+SAP-Schema-NI-18.0.0:
             schema:
               $ref: '#/components/schemas/Empty'
           application/xml+CEPC-7.1:
@@ -941,6 +941,8 @@ paths:
           description: Energy assessment with RRN assessmentId can not be found
         '409':
           description: Plan with the submitted ID already exists
+        '410':
+          description: Assessment has been cancelled or not for issue
         '500':
           description: Server error
 
@@ -984,7 +986,7 @@ paths:
         '404':
           description: Green Deal plan with ID planId can not be found
         '409':
-          description: Plan is not active or Identifier in request body doesn't match the planId in the URL
+          description: Identifier in request body doesn't match the planId in the URL
         '500':
           description: Server error
     delete:
@@ -1516,7 +1518,7 @@ components:
         sequence:
           type: number
           example: 1
-          description: 'The order in which this reccomendation should be shown'
+          description: 'The order in which this recommendation should be shown'
         improvementCode:
           type: string
           example: '1'
@@ -1666,7 +1668,7 @@ components:
     GreenDealPlan:
       type: object
       properties:
-        GreenDealPlanId:
+        greenDealPlanId:
           $ref: '#/components/schemas/GreenDealPlanId'
         startDate:
           description: The date the plan went live
