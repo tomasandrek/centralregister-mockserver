@@ -474,10 +474,10 @@ paths:
           application/xml+SAP-Schema-NI-18.0.0:
             schema:
               $ref: '#/components/schemas/Empty'
-          application/xml+CEPC-7.1:
+          application/xml+CEPC-8.0.0:
             schema:
               $ref: '#/components/schemas/Empty'
-          application/xml+CEPC-NI-7.1:
+          application/xml+CEPC-NI-8.0.0:
             schema:
               $ref: '#/components/schemas/Empty'
       responses:
@@ -1811,11 +1811,11 @@ components:
           type: boolean
           example: true
         spaceHeating:
-          type: string
-          example: 'Gas-fired central heating'
+          type: number
+          example: 9901.00
         waterHeating:
-          type: string
-          example: 'Electrical immersion heater'
+          type: number
+          example: 2654.00
         secondaryHeating:
           type: string
           example: 'Electric bar heater'
