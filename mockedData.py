@@ -84,6 +84,10 @@ def schemes__post() -> str:
     return 'schemes__post'
 
 
+def schemes_x__put() -> str:
+    return 'schemes_x__put'
+
+
 def schemes_x_assessors__get(schemeId):
     response = [{
         'firstName': 'Jo',
