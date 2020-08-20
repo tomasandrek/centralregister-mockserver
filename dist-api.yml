@@ -6,11 +6,11 @@ info:
   version: 1.0.0-rc4
 
 servers:
-  - url: 'https://api.epb-integration.digital.communities.gov.uk/api'
+  - url: 'https://api.epb-integration.digital.communities.gov.uk/'
     description: Integration Service
-  - url: 'https://api.epb-staging.digital.communities.gov.uk/api'
+  - url: 'https://api.epb-staging.digital.communities.gov.uk/'
     description: Staging Service
-  - url: 'https://api.epb.digital.communities.gov.uk/api'
+  - url: 'https://api.epb.digital.communities.gov.uk/'
     description: Production Service
 
 tags:
