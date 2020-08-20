@@ -238,6 +238,10 @@ def search_addresses__get(**query):
     return Response(json_response, status=200, mimetype='application/json')
 
 
+def assessments_search__get() -> str:
+    return 'assessments_search__get'
+
+
 def assessments_x__get(assessmentId) -> str:
     json_response = """{
         data: {
