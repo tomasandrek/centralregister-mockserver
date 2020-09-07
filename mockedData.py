@@ -281,6 +281,14 @@ def assessments_x_status__post(assessmentId):
     return response, 200
 
 
+def assessments_x_summary__get() -> str:
+    return 'assessments_x_summary__get'
+
+
+def dec_summary_x__get() -> str:
+    return 'dec_summary_x__get'
+
+
 def reports_assessors_status__get() -> str:
     return 'reports_assessors_status__get'
 
